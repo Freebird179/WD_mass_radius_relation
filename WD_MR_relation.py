@@ -51,17 +51,9 @@ def Radius_from_teff_logg(Temp,logg, Model, spec_type,thickness):
     MR_tab_ev=MR_tab_evol.loc[(MR_tab_evol["thickness"]==thickness)]
 
     if Model=="Althaus13": 
-        print('-------------------------------')
-        print('Althaus 2013')
-        print('-------------------------------')
-        print('using interp. mass phot. tables')
         R=griddata((MR_tab_aseq["log(teff)"],MR_tab_aseq["logg"]),np.log10(MR_tab_aseq["R(Rsun)"]),(Temp,logg))
-        print(10**R)
-        
-        if np.any(np.isnan(R)):
-            print('using intrep. logg phot. tables for nan values') 
+     
         R=np.where(np.isnan(R),griddata((MR_tab_an["log(teff)"],MR_tab_an["logg"]),np.log10(MR_tab_an["R(Rsun)"]),(Temp,logg)),R)
-        #print(R)
         
         if np.any(np.isnan(R)):
             print('-------------------------------')
@@ -69,23 +61,12 @@ def Radius_from_teff_logg(Temp,logg, Model, spec_type,thickness):
 
     
     if Model=="Bedard20":
-        print('-------------------------------')
-        print('Bedard 2020')
-        print('-------------------------------')
-        print('using evol. seq.')
         R=griddata((MR_tab_ev["logT"],MR_tab_ev["logg"]),MR_tab_ev["logR"],(Temp,logg))
-        print(10**R)
 
-        if np.any(np.isnan(R)):
-            print('using interp. mass phot. tables for nan values')
         R=np.where(np.isnan(R),griddata((np.log10(MR_tab_ms["Teff"]),MR_tab_ms["logg"]),np.log10(MR_tab_ms["R"]), (Temp,logg)),R)
-        #print(R)
-        
-        if np.any(np.isnan(R)):
-            print('using interp. logg phot. tables for nan values')      
+             
         R=np.where(np.isnan(R),griddata((np.log10(MR_tab_sp["Teff"]),MR_tab_sp["logg"]),np.log10(MR_tab_sp["R"]),(Temp,logg)),R)
-        #print(R)                  
-        
+                
         if np.any(np.isnan(R)):
             print('-------------------------------')
             print('--> input parameters out of all the model grids for nan values')
@@ -113,39 +94,16 @@ def Mass_from_teff_logg(Temp,logg, Model, spec_type,thickness):
     MR_tab_ev=MR_tab_evol.loc[(MR_tab_evol["thickness"]==thickness)]
 
     if Model=="Althaus13": 
-        print('-------------------------------')
-        print('Althaus 2013')
-        print('-------------------------------')
-        print('using interp. mass phot. tables')
         M=griddata((MR_tab_aseq["log(teff)"],MR_tab_aseq["logg"]),MR_tab_aseq["mWD"],(Temp,logg))
-        print(M)
-        
-        if np.any(np.isnan(M)):
-            print('using intrep. logg phot. tables for nan values') 
+       
         M=np.where(np.isnan(M),griddata((MR_tab_an["log(teff)"],MR_tab_an["logg"]),MR_tab_an["mWD"],(Temp,logg)),M)
         
-        if np.any(np.isnan(M)):
-            print('-------------------------------')
-            print('--> input parameters out of all the model grids for nan values')
-
-    
     if Model=="Bedard20":
-        print('-------------------------------')
-        print('Bedard 2020')
-        print('-------------------------------')
-        print('using evol. seq.')
         M=griddata((MR_tab_ev["logT"],MR_tab_ev["logg"]),MR_tab_ev["Mass"],(Temp,logg))
-        print(M)
-
-        if np.any(np.isnan(M)):
-            print('using interp. mass phot. tables for nan values')
+       
         M=np.where(np.isnan(M),griddata((np.log10(MR_tab_ms["Teff"]),MR_tab_ms["logg"]),MR_tab_ms["Mass"], (Temp,logg)),M)
-        #print(R)
-        
-        if np.any(np.isnan(M)):
-            print('using interp. logg phot. tables for nan values')      
+         
         M=np.where(np.isnan(M),griddata((np.log10(MR_tab_sp["Teff"]),MR_tab_sp["logg"]),MR_tab_sp["Mass"],(Temp,logg)),M)
-        #print(R)                  
         
         if np.any(np.isnan(M)):
             print('-------------------------------')
@@ -155,8 +113,8 @@ def Mass_from_teff_logg(Temp,logg, Model, spec_type,thickness):
 #example
 Tempi=np.linspace(8000,70000,10)
 loggi=np.linspace(7,9.3,10)
-print('Temp:'+str(Tempi))
-print('logg:'+str(loggi))
+#print('Temp:'+str(Tempi))
+#print('logg:'+str(loggi))
 
 mon_r= Radius_from_teff_logg(Tempi, loggi,"Bedard20",'DA','thick')
 #print(mon_r)
