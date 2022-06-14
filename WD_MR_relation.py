@@ -110,49 +110,4 @@ def Mass_from_teff_logg(Temp,logg, Model, spec_type,thickness):
             print('--> input parameters out of all the model grids for nan values')
     return M
         
-#example
-Tempi=np.linspace(8000,70000,10)
-loggi=np.linspace(7,9.3,10)
-#print('Temp:'+str(Tempi))
-#print('logg:'+str(loggi))
 
-mon_r= Radius_from_teff_logg(Tempi, loggi,"Bedard20",'DA','thick')
-#print(mon_r)
-mon_m= Mass_from_teff_logg(Tempi, loggi,"Bedard20",'DA','thick')
-
-
-arg_r= Radius_from_teff_logg(Tempi, loggi,"Althaus13",'DA','thick')
-#print(arg_r)
-arg_m= Mass_from_teff_logg(Tempi, loggi,"Althaus13",'DA','thick')
-
-
-
-#plot DA models
-plt.clf()
-argen=MR_tab_ase.loc[(MR_tab_ase["spec_type"]=='DA')]
-argen_s=MR_tab_a.loc[(MR_tab_a["spec_type"]=='DA')]
-mont_g=MR_tab_m.loc[(MR_tab_m["spec_type"]=='DA')]
-mont=MR_tab_s.loc[(MR_tab_s["spec_type"]=='DA')]
-mont_ev=MR_tab_evol.loc[(MR_tab_evol["thickness"]=='thick')]
-
-ax=plt.subplot(111)
-
-
-#ax.plot(argen_s["logg"],10**argen_s["log(teff)"],'k.',alpha=0.5,label="Althaus DA logg")
-#ax.plot(mont["logg"],mont["Teff"],'b.',label="Bedard DA logg")
-ax.plot(mont_ev["logg"],10**mont_ev["logT"],'c.', label="Bedard evol. seq.")
-ax.plot(mont_g["logg"],mont_g["Teff"],'y+',label="Bedard DA mass")
-ax.plot(argen["logg"],10**argen["log(teff)"],'r.',label="Althaus DA mass")
-# grp=argen.groupby(["spec_type","mWD"])
-# grp1=mont_g.groupby(["spec_type","Mass"])
-# for i in range(len(grp.first())):
-#     ax.text(grp["logg"].first()[i]-0.07,10**grp["log(teff)"].first()[i]-400,grp["mWD"].first()[i],color='r',size=10)
-# for i in range(len(grp1.first())):
-#     ax.text(grp1["logg"].first()[i]-0.07,grp1["Teff"].first()[i]-280,grp1["Mass"].first()[i],color='k',size=10)
-    
-#ax.plot(loggi, Tempi, 'kx')
-plt.xlabel("log g",size=14)
-plt.ylabel("T$_{eff}$",size=14)
-plt.yscale('log')
-plt.legend(loc='upper right',ncol=1)
-plt.show()
