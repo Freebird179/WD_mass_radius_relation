@@ -1,4 +1,4 @@
-# WD_mass-radius_relation
+# WD_mass_radius_relation
 Module for calculating the radius and mass of a white dwarf from effective temperature (Teff) and surface gravity (logg) by interpolating the Argentenian (http://evolgroup.fcaglp.unlp.edu.ar/TRACKS/newtables.html) (Althaus et al. 2013) or Montreal (https://www.astro.umontreal.ca/~bergeron/CoolingModels/) (Bedard et al. 2020) WD evolutionary models to use as a mass-radius relation.  
 
 1. Required packages:Python 3.6 or higher, numpy, scipy, astropy, pandas
